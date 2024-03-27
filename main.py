@@ -51,4 +51,5 @@ if res["status"] == "OK":
         system("pause")
 else:
     print(res["msg"])
+    system("pause")
 
