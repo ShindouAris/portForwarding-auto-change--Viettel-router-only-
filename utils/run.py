@@ -50,23 +50,23 @@ def portForward(ipv4):
     # ???
     fx12 = driver.find_element(By.ID, "scrollRightBtn")
     fx12.click()
-    time.sleep(3)
+    time.sleep(2)
     # Vào Mục Port Forwarding
+    print("Đang mở mục Port Forwarding")
     portForwarding_btn = driver.find_element(By.ID, "portForwarding")
     portForwarding_btn.click()
-    time.sleep(3)
-    print("Đang mở mục Port Forwarding")
+    time.sleep(2)
     # Mở thiết đặt để thay đổi cổng
+    print("Đang mở thiết đặt")
     portmngr = driver.find_element(By.ID, "instName_PortForwarding:0")
     portmngr.click()
-    print("Đang mở thiết đặt")
     # Tiến hành thay đổi cổng
     print("Đang thay đổi ipv4")
     port_mc = driver.find_element(By.ID, "InternalClient:0")
     port_mc.clear()
     port_mc.send_keys(ipv4)
     
-    time.sleep(3)
+    time.sleep(2)
     # Lưu cài đặt
     print("Đang lưu cài đặt")
     save_btn = driver.find_element(By.ID, "Btn_apply_PortForwarding:0")
@@ -76,6 +76,7 @@ def portForward(ipv4):
     print("Đang đăng xuất..")
     LogOffLnk_btn = driver.find_element(By.ID, "LogOffLnk")
     LogOffLnk_btn.click()
+    time.sleep(3)
 
     # Đóng driver
     driver.close()
