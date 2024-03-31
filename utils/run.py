@@ -24,59 +24,65 @@ def portForward(ipv4):
         driver.get("http://192.168.1.1")
     except Exception as e:
         print(f"Lỗi: {repr(e)}")
+    try:
+            user_lgn = driver.find_element(By.ID, "Frm_Username")
+            user_lgn.send_keys(environ.get("USER_LOGIN_NAME"))
+            print(f"Đã đăng nhập bằng user: {environ.get('USER_LOGIN_NAME')}")
 
-    user_lgn = driver.find_element(By.ID, "Frm_Username")
-    user_lgn.send_keys(environ.get("USER_LOGIN_NAME"))
-    print(f"Đã đăng nhập bằng user: {environ.get('USER_LOGIN_NAME')}")
+            user_lgn_pw = driver.find_element(By.ID, "Frm_Password")
+            user_lgn_pw.send_keys(environ.get("USER_LOGIN_PASSWORD"))
+            print(f"Mật khẩu: {environ.get('USER_LOGIN_PASSWORD')}")
 
-    user_lgn_pw = driver.find_element(By.ID, "Frm_Password")
-    user_lgn_pw.send_keys(environ.get("USER_LOGIN_PASSWORD"))
-    print(f"Mật khẩu: {environ.get('USER_LOGIN_PASSWORD')}")
+            lgn_btn = driver.find_element(By.ID, "LoginId")
+            lgn_btn.click()
 
-    lgn_btn = driver.find_element(By.ID, "LoginId")
-    lgn_btn.click()
+            WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.ID, "Btn_Close")))
+            # Vào Setup
+            ad_setup_btn = driver.find_element(By.ID, "Btn_Close")
+            ad_setup_btn.click()
+            print("Đang vào setup")
+            WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.ID, "FWUrl")))
+            # Vào mục Security
+            Wan_url = driver.find_element(By.ID, "FWUrl")
+            Wan_url.click()
+            print("Đang vào security")
+            WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.ID, "pageIntroduce")))
+            # ???
+            fx12 = driver.find_element(By.ID, "scrollRightBtn")
+            fx12.click()
+            time.sleep(2)
+            # Vào Mục Port Forwarding
+            print("Đang mở mục Port Forwarding")
+            portForwarding_btn = driver.find_element(By.ID, "portForwarding")
+            portForwarding_btn.click()
+            time.sleep(2)
+            # Mở thiết đặt để thay đổi cổng
+            print("Đang mở thiết đặt")
+            portmngr = driver.find_element(By.ID, "instName_PortForwarding:0")
+            portmngr.click()
+            # Tiến hành thay đổi cổng
+            print("Đang thay đổi ipv4")
+            port_mc = driver.find_element(By.ID, "InternalClient:0")
+            port_mc.clear()
+            port_mc.send_keys(ipv4)
+            
+            time.sleep(2)
+            # Lưu cài đặt
+            print("Đang lưu cài đặt")
+            save_btn = driver.find_element(By.ID, "Btn_apply_PortForwarding:0")
+            save_btn.click()
 
-    WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.ID, "Btn_Close")))
-    # Vào Setup
-    ad_setup_btn = driver.find_element(By.ID, "Btn_Close")
-    ad_setup_btn.click()
-    print("Đang vào setup")
-    WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.ID, "FWUrl")))
-    # Vào mục Security
-    Wan_url = driver.find_element(By.ID, "FWUrl")
-    Wan_url.click()
-    print("Đang vào security")
-    WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.ID, "pageIntroduce")))
-    # ???
-    fx12 = driver.find_element(By.ID, "scrollRightBtn")
-    fx12.click()
-    time.sleep(2)
-    # Vào Mục Port Forwarding
-    print("Đang mở mục Port Forwarding")
-    portForwarding_btn = driver.find_element(By.ID, "portForwarding")
-    portForwarding_btn.click()
-    time.sleep(2)
-    # Mở thiết đặt để thay đổi cổng
-    print("Đang mở thiết đặt")
-    portmngr = driver.find_element(By.ID, "instName_PortForwarding:0")
-    portmngr.click()
-    # Tiến hành thay đổi cổng
-    print("Đang thay đổi ipv4")
-    port_mc = driver.find_element(By.ID, "InternalClient:0")
-    port_mc.clear()
-    port_mc.send_keys(ipv4)
-    
-    time.sleep(2)
-    # Lưu cài đặt
-    print("Đang lưu cài đặt")
-    save_btn = driver.find_element(By.ID, "Btn_apply_PortForwarding:0")
-    save_btn.click()
+            # Đăng xuất
+            print("Đang đăng xuất..")
+            LogOffLnk_btn = driver.find_element(By.ID, "LogOffLnk")
+            LogOffLnk_btn.click()
+            time.sleep(3)
 
-    # Đăng xuất
-    print("Đang đăng xuất..")
-    LogOffLnk_btn = driver.find_element(By.ID, "LogOffLnk")
-    LogOffLnk_btn.click()
-    time.sleep(3)
+    except Exception as e:
+         return {
+              "status": "failed",
+              "msg": e
+         }
 
     # Đóng driver
     driver.close()
