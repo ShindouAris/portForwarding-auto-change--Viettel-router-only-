@@ -56,7 +56,6 @@ async def main():
                 system("cls")
                 print(f"Đã đổi cổng chuyển tiếp sang ipv4: {set_v4ip}\n")
                 time.sleep(10)
-                system("pause")
             elif program["status"] == "failed":
                 print(f"Đã xảy ra lỗi: {repr(program['msg'])}")
                 
