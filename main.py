@@ -24,7 +24,7 @@ def timer(func):
         start = default_timer()
         res = func(*args, **kwargs)
         end = default_timer()
-        print(f"Thời gian chạy: {round((end - start), 2)}s")
+        print(f"Thời gian chạy: {round((end - start), 3)}s")
         return res
     return wrapper
     
