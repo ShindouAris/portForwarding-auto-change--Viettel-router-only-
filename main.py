@@ -3,6 +3,8 @@ from utils.getipv4 import getipv4
 from utils.run import *
 import asyncio
 from inputimeout import inputimeout
+from utils.db import Database
+from timeit import default_timer
 
 def check(v4ip):
     if v4ip == "192.168.1.1":
@@ -17,9 +19,21 @@ def check(v4ip):
         }
 timeout = 5
 
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = default_timer()
+        res = func(*args, **kwargs)
+        end = default_timer()
+        print(f"Thời gian chạy: {round((end - start), 2)}s")
+        return res
+    return wrapper
+    
+
 
 try: system("cls")
 except: system("clear")
+
+
 async def main():
         global select, set_v4ip
         try:
@@ -44,7 +58,8 @@ async def main():
             set_v4ip = f"192.168.1.{ip}"
         except NameError:
             pass
-
+        
+        Database.sql_("""INSERT TO """)
         res = check(set_v4ip)
 
         if res["status"] == "OK":
@@ -58,7 +73,6 @@ async def main():
                 time.sleep(10)
             elif program["status"] == "failed":
                 print(f"Đã xảy ra lỗi: {repr(program['msg'])}")
-                
         else:
             print(res["msg"])
             system("pause")

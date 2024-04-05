@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select as SL
 from os import environ, system
 import time
 import dotenv
+from main import timer
 ops = webdriver.ChromeOptions()
 ops.add_argument('--ignore-certificate-errors')
 ops.add_argument("--disable-proxy-certificate-handler")
@@ -15,6 +16,7 @@ dotenv.load_dotenv()
 
 
 # Mở trình duyệt và truy cập vào ip router
+@timer
 def portForward(ipv4):
     time.sleep(3)
     try: system("cls")
