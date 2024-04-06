@@ -46,7 +46,7 @@ async def main():
                 set_v4ip = getipv4()
             elif int(select) > 2:
                 print("Lựa chon không hợp lệ!")
-                system("shutdown -r -t 10")
+                
                 set_v4ip = "192.168.1.1"
             else:
                 try:
